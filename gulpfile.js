@@ -1,23 +1,20 @@
 const gulp = require('gulp')
 const ts = require('gulp-typescript')
+const gulpWatch = require('gulp-watch')
 const nodemon = require('gulp-nodemon')
-const eslint = require('gulp-eslint')
 
 var sourcemaps = require('gulp-sourcemaps')
 
-
 const tsProject = ts.createProject('server/src/tsconfig.json')
 const DESTINATION = 'server/dist'
-
 function watchNode(done) {
   //Restart node server if changes to file systeym happen
   const stream = nodemon({
     script: '',
-    ext: 'ts',
-    watch: ['**/*.ts'],
-    ignore: ['node_modules', 'migrations', 'scripts', 'seeds', 'test', 'server/dist', 'data'],
-    exec: 'nodemon --nolazy --inspect ./server/dist/server.js',
-    tasks: ['compilejs'],
+    ext: 'js',
+    watch: ['./server/**/*.js'],
+    ignore: ['node_modules'],
+    exec: 'nodemon --nolazy --inspect=0.0.0.0 --nolazy ./server/dist/server.js',
     done,
     verbose: true,
   })
@@ -39,18 +36,15 @@ function compilejs(done) {
     .pipe(gulp.dest(DESTINATION))
 }
 
-function lint() {
-  return gulp.src(['server/src/**/*.{ts,js}'])
-    .pipe(eslint())
-    .pipe(eslint.format('codeframe'))
-    .pipe(eslint.failAfterError())
+function watch() {
+  return gulpWatch('server/src/**/*.ts',compilejs)
 }
 
 module.exports = {
   watchNode,
   compilejs,
-  lint,
-  default: gulp.series(compilejs, watchNode)
+  watchTs: gulp.series(compilejs, watch),
+  default: gulp.series(watchNode)
 }
 
 

@@ -10,33 +10,8 @@
       "name": "Attach",
       "restart": true,
       "sourceMaps": true,
-      "outFiles": ["${workspaceFolder}/server/dist/**/*.js"],
-      "skipFiles": [
-        "<node_internals>/**/*.js",
-      ]
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Debug",
-      "restart": true,
-      "program": "${workspaceFolder}/server/bin/www",
-      "sourceMaps": true,
-      "outFiles": ["${workspaceFolder}/server/dist/**/*.js"],
-      "skipFiles": [
-        "<node_internals>/**/*.js",
-      ]
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Migrations",
-      "program": "${workspaceFolder}/migrations/migration.js",
-      "restart": true,
-      "outFiles": ["${workspaceFolder}/server/dist/**/*.js"],
-      "skipFiles": [
-        "<node_internals>/**/*.js",
-      ]
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/api"
     },
     {
       "type": "node",
@@ -48,12 +23,10 @@
         "-p",
         "server/src/tsconfig.json",
         "--colors",
-        "test/**/*.test.ts",
-    ],
+        "test/**/*.test.ts"
+      ],
       "restart": true,
-      "skipFiles": [
-        "<node_internals>/**/*.js",
-      ]
+      "skipFiles": ["<node_internals>/**/*.js"]
     }
   ]
 }
