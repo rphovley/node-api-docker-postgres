@@ -3,12 +3,12 @@ services:
   api:
     container_name: api
     image: node:erbium-alpine
-    command: /bin/sh -c "cd api && npx gulp --prefix /api"
+    command: /bin/sh -c "cd api && ./node_modules/.bin/nodemon --inspect=0.0.0.0 ./server/dist/server.js"
     volumes:
       - ./server/dist:/api/server/dist
       - ./server/bin:/api/server/bin
       - ./node_modules:/api/node_modules
-      - ./gulpfile.js:/api/gulpfile.js
+      - ./package.json:/api/package.json
     depends_on:
       - global_db
     ports:

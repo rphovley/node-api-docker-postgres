@@ -8,9 +8,12 @@
     "url": "replace-me"
   },
   "scripts": {
-    "start": "bash scripts/start-api.sh",
-    "dev": "yarn start",
-    "compile": "gulp compilejs",
+    "start": "node server/dist/server.js",
+    "dev": "bash scripts/start-api.sh",
+    "start-db": "bash scripts/start-db.sh",
+    "compile": "tsc -p server",
+    "watch": "tsc -p server -w",
+    "gcp-build": "yarn compile",
     "test": "ts-mocha --paths -p server/src/tsconfig.json test/**/*.test.ts",
     "logs": "docker-compose -p replace-me -f docker-compose.dev.yml logs -f",
     "kill": "docker-compose -p replace-me -f docker-compose.dev.yml kill",
@@ -24,8 +27,10 @@
     "migrate-tenant": "cd ./deployment/multi-tenant && ts-node migrate.ts",
     "seed-global": "cd ./deployment/global && ts-node seeds.ts",
     "seed-tenant": "cd ./deployment/multi-tenant && ts-node seeds.ts",
-    "prod": "bash scripts/build-prod.sh",
+    "build-deployer": "docker build ./deployment --tag  registry.gitlab.com/rphovley-templates/node-api-gcae-gcsql-tenancy/deployer",
+    "push-deployer": "docker push registry.gitlab.com/rphovley-templates/node-api-gcae-gcsql-tenancy/deployer",
     "test-runner": "gitlab-runner exec docker --docker-privileged --cache-dir=/tmp/cache --docker-volumes /tmp/cache:/tmp/cache $(cat ./deployment/ci.env |cut -f 2 |sed 's/^/--env /g'| xargs -0) deploy_production",
+    "prod": "bash scripts/build-prod.sh",
     "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
@@ -69,16 +74,20 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
     "faker": "^4.1.0",
-    "gulp": "^4.0.2",
-    "gulp-nodemon": "^2.4.2",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-typescript": "^5.0.1",
     "mocha": "^6.2.1",
+    "nodemon": "^2.0.3",
     "prettier-eslint": "^9.0.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "ts-mocha": "^6.0.0",
     "ts-node": "^8.6.1",
-    "typescript": "^3.6.4"
+    "typescript": "^3.8.3"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules"
+    ],
+    "watch": "server/dist/**/*.js",
+    "ext": "js"
   }
 }
