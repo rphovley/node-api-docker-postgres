@@ -1,0 +1,58 @@
+version: "3"
+services:
+  api:
+    container_name: api
+    image: registry.gitlab.com/rphovley-templates/node-api-gckubernetes-tenancy
+    command: node /api/server/dist/server.js
+    env_file:
+      - ./server/bin/env/.firebase.env
+      - ./server/bin/env/.global.db.env
+      - ./server/bin/env/.log.env
+    depends_on:
+      - global_db
+    ports:
+      - "8080:8080"
+  tesla_db:
+    container_name: tesla_db
+    image: postgres:9.6.15
+    environment:
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+      POSTGRES_PASSWORD: ""
+      POSTGRES_USER: "tenant"
+    volumes:
+      - ./data/tesla-data:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+  kwiki_mart_db:
+    container_name: kwiki_mart_db
+    image: postgres:9.6.15
+    environment:
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+      POSTGRES_PASSWORD: ""
+      POSTGRES_USER: "tenant"
+    volumes:
+      - ./data/kwiki-mart-data:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5433:5432"
+  lemonade_stand_db:
+    container_name: lemonade_stand_silicon_db
+    image: postgres:9.6.15
+    environment:
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+      POSTGRES_PASSWORD: ""
+      POSTGRES_USER: "tenant"
+    volumes:
+      - ./data/lemonade-stand-data:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5434:5432"
+  global_db:
+    container_name: global_db
+    image: postgres:9.6.15
+    environment:
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+      POSTGRES_PASSWORD: ""
+      POSTGRES_USER: "global"
+    volumes:
+      - ./data/global-data:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5435:5432"

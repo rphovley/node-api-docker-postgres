@@ -8,11 +8,9 @@
     "url": "replace-me"
   },
   "scripts": {
-    "start": "bash scripts/start-db.sh",
+    "start": "bash scripts/start-api.sh",
     "dev": "yarn start",
     "compile": "gulp compilejs",
-    "watch": "gulp watchTs",
-    "gcp-build": "yarn compile",
     "test": "ts-mocha --paths -p server/src/tsconfig.json test/**/*.test.ts",
     "logs": "docker-compose -p replace-me -f docker-compose.dev.yml logs -f",
     "kill": "docker-compose -p replace-me -f docker-compose.dev.yml kill",
@@ -26,8 +24,7 @@
     "migrate-tenant": "cd ./deployment/multi-tenant && ts-node migrate.ts",
     "seed-global": "cd ./deployment/global && ts-node seeds.ts",
     "seed-tenant": "cd ./deployment/multi-tenant && ts-node seeds.ts",
-    "build-deployer": "docker build ./deployment --tag  registry.gitlab.com/rphovley-templates/node-api-gcae-gcsql-tenancy/deployer",
-    "push-deployer": "docker push registry.gitlab.com/rphovley-templates/node-api-gcae-gcsql-tenancy/deployer",
+    "prod": "bash scripts/build-prod.sh",
     "test-runner": "gitlab-runner exec docker --docker-privileged --cache-dir=/tmp/cache --docker-volumes /tmp/cache:/tmp/cache $(cat ./deployment/ci.env |cut -f 2 |sed 's/^/--env /g'| xargs -0) deploy_production",
     "lint": "eslint . --ext .ts,.tsx"
   },
@@ -75,7 +72,6 @@
     "gulp": "^4.0.2",
     "gulp-nodemon": "^2.4.2",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-watch": "^5.0.1",
     "gulp-typescript": "^5.0.1",
     "mocha": "^6.2.1",
     "prettier-eslint": "^9.0.1",
