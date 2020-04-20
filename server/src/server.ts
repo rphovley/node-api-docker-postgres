@@ -53,5 +53,6 @@ function onListening(): void {
   const address = httpServer.address()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { port } = address as any
+  console.log('WOW!')
   console.log(`Magic Happens on port ${port}`)
 }

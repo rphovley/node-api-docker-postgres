@@ -14,7 +14,7 @@ function watchNode(done) {
   const stream = nodemon({
     script: '',
     ext: 'ts',
-    watch: ['**/*.ts', '**/*.js'],
+    watch: ['**/*.ts'],
     ignore: ['node_modules', 'migrations', 'scripts', 'seeds', 'test', 'server/dist', 'data'],
     exec: 'nodemon --nolazy --inspect ./server/dist/server.js',
     tasks: ['compilejs'],

@@ -1,45 +1,58 @@
 version: "3"
 services:
-  success_resources_db:
-    container_name: replace-me_success_db
+  api:
+    container_name: api
+    image: node:erbium-alpine
+    command: /bin/sh -c "cd api && npx gulp --prefix /api"
+    volumes:
+      - ./server/src:/api/server/src
+      - ./server/bin:/api/server/bin
+      - ./node_modules:/api/node_modules
+      - ./gulpfile.js:/api/gulpfile.js
+    depends_on:
+      - global_db
+    ports:
+      - "8080:8080"
+  tesla_db:
+    container_name: tesla_db
     image: postgres:9.6.15
     environment:
       PGDATA: "/var/lib/postgresql/data/pgdata"
       POSTGRES_PASSWORD: ""
-      POSTGRES_USER: "replace-me"
+      POSTGRES_USER: "tenant"
     volumes:
-      - ./data/success-resources-data:/var/lib/postgresql/data/pgdata
+      - ./data/tesla-data:/var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
-  tony_robbins_db:
-    container_name: replace-me_tony_db
+  kwiki_mart_db:
+    container_name: kwiki_mart_db
     image: postgres:9.6.15
     environment:
       PGDATA: "/var/lib/postgresql/data/pgdata"
       POSTGRES_PASSWORD: ""
-      POSTGRES_USER: "replace-me"
+      POSTGRES_USER: "tenant"
     volumes:
-      - ./data/tony-robbins-data:/var/lib/postgresql/data/pgdata
+      - ./data/kwiki-mart-data:/var/lib/postgresql/data/pgdata
     ports:
       - "5433:5432"
-  silicon_slopes_db:
-    container_name: replace-me_silicon_db
+  lemonade_stand_db:
+    container_name: lemonade_stand_silicon_db
     image: postgres:9.6.15
     environment:
       PGDATA: "/var/lib/postgresql/data/pgdata"
       POSTGRES_PASSWORD: ""
-      POSTGRES_USER: "replace-me"
+      POSTGRES_USER: "tenant"
     volumes:
-      - ./data/silicon-slopes-data:/var/lib/postgresql/data/pgdata
+      - ./data/lemonade-stand-data:/var/lib/postgresql/data/pgdata
     ports:
       - "5434:5432"
   global_db:
-    container_name: replace-me_global_db
+    container_name: global_db
     image: postgres:9.6.15
     environment:
       PGDATA: "/var/lib/postgresql/data/pgdata"
       POSTGRES_PASSWORD: ""
-      POSTGRES_USER: "replace-me"
+      POSTGRES_USER: "global"
     volumes:
       - ./data/global-data:/var/lib/postgresql/data/pgdata
     ports:

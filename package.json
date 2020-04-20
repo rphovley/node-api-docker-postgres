@@ -8,9 +8,8 @@
     "url": "replace-me"
   },
   "scripts": {
-    "start": "node server/dist/server.js",
-    "dev": "bash scripts/start-api.sh",
-    "start-db": "bash scripts/start-db.sh",
+    "start": "bash scripts/start-db.sh",
+    "dev": "yarn start",
     "compile": "gulp compilejs",
     "gcp-build": "yarn compile",
     "test": "ts-mocha --paths -p server/src/tsconfig.json test/**/*.test.ts",
