@@ -21,10 +21,10 @@ services:
       - "9229:9229" # for remote debugging
   db:
     container_name: db
-    image: postgres:9.6.15
+    image: postgres:11-alpine
     environment:
       PGDATA: "/var/lib/postgresql/data/pgdata"
-      POSTGRES_PASSWORD: ""
+      POSTGRES_PASSWORD: "password"
       POSTGRES_USER: "replace-me"
     volumes:
       - ./data/db_data:/var/lib/postgresql/data/pgdata

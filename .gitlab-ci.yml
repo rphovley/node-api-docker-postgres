@@ -26,10 +26,6 @@ dependencies:
 
 build:
   stage: build
-  cache:
-    paths:
-      - node_modules/
-    policy: pull # we don't change the cache so only pull changes don't push any new ones (saves time)
   script:
     - yarn lint # I have included this in the same stage because of stage overhead (30 seconds per stage)
     # - yarn compile # whatever command(s) to build the project, App Engine is building this project in the deployment stage
@@ -39,10 +35,6 @@ deploy_staging:
   image: $DEPLOYER_TAG
   when: on_success
   environment: staging
-  cache:
-    paths:
-      - node_modules/
-    policy: pull
   script:
     - echo $DEPLOYER_SERVICE_ACCOUNT | xxd -r -p - > /tmp/$CI_PIPELINE_ID.json # translate hex back to json
     - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json # use json to authenticate with gcloud
@@ -56,10 +48,6 @@ migrate_staging:
     - deployer
   when: on_success
   environment: staging_migrations
-  cache:
-    paths:
-      - node_modules/
-    policy: pull # we don't change the cache so only pull changes don't push any new ones (saves time)
   script:
     - yarn migrate
 
@@ -67,10 +55,6 @@ deploy_production:
   stage: production
   image: $DEPLOYER_TAG
   when: manual
-  cache:
-    paths:
-      - node_modules/
-    policy: pull # we don't change the cache so only pull changes don't push any new ones (saves time)
   only:
     - master
   environment: production
@@ -86,10 +70,6 @@ migrate_production:
   tags:
     - deployer
   when: manual
-  cache:
-    paths:
-      - node_modules/
-    policy: pull # we don't change the cache so only pull changes don't push any new ones (saves time)
   only:
     - master
   environment: production_migrations

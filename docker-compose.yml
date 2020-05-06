@@ -14,10 +14,10 @@ services:
       - "8080:8080"
   db:
     container_name: db
-    image: postgres:12-alpine
+    image: postgres:11-alpine
     environment:
       PGDATA: "/var/lib/postgresql/data/pgdata"
-      POSTGRES_PASSWORD: ""
+      POSTGRES_PASSWORD: "password"
       POSTGRES_USER: "global"
     volumes:
       - ./data/db_data:/var/lib/postgresql/data/pgdata
