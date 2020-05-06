@@ -2,7 +2,7 @@ version: "3"
 services:
   api:
     container_name: api
-    image: registry.gitlab.com/rphovley-templates/node-api-gckubernetes-tenancy
+    image: node:dubnium-alpine
     command: node /api/server/dist/server.js
     env_file:
       - ./server/bin/env/.firebase.env

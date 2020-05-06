@@ -1,6 +1,6 @@
 {
   "name": "replace-me",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "server/dist/server.js",
   "repository": {
@@ -23,7 +23,7 @@
     "seed": "docker exec api /bin/sh -c 'cd /api && sh ./deployment/migrate_and_seed.sh'",
     "build-deployer": "docker build ./deployment --tag  registry.gitlab.com/rphovley-templates/node-api-gcae-gcsql-tenancy/deployer",
     "push-deployer": "docker push registry.gitlab.com/rphovley-templates/node-api-gcae-gcsql-tenancy/deployer",
-    "test-runner": "gitlab-runner exec docker --docker-privileged --cache-dir=/tmp/cache --docker-volumes /tmp/cache:/tmp/cache $(cat ./deployment/ci.env |cut -f 2 |sed 's/^/--env /g'| xargs -0) deploy_production",
+    "test-runner": "gitlab-runner exec docker --docker-privileged --cache-dir=/tmp/cache --docker-volumes /tmp/cache:/tmp/cache $(cat ./deployment/ci.env |cut -f 2 |sed 's/^/--env /g'| xargs -0) dependencies",
     "prod": "bash scripts/build-prod.sh",
     "lint": "eslint . --ext .ts,.tsx"
   },
