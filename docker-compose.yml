@@ -2,7 +2,7 @@ version: "3"
 services:
   api:
     container_name: api
-    image: node:dubnium-alpine
+    image: node:erbium-alpine
     command: node /api/server/dist/server.js
     env_file:
       - ./server/bin/env/.firebase.env

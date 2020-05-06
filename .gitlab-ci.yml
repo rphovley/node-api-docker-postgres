@@ -1,4 +1,4 @@
-image: node:dubnium-alpine
+image: node:erbium-alpine
 
 variables:
   DEPLOYER_TAG: "registry.gitlab.com/rphovley-templates/node-api-gcae-gcsql-tenancy/deployer"
