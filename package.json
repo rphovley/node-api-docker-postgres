@@ -7,6 +7,9 @@
     "type": "git",
     "url": "replace-me"
   },
+  "engines": {
+    "node": "12"
+  },
   "scripts": {
     "start": "node server/dist/server.js",
     "dev": "bash scripts/start-api.sh",
