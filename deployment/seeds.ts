@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 /* eslint-disable no-await-in-loop */
-import { AppUser } from '../../test/factories/app_user.factory'
-import { Lead } from '../../test/factories/lead.factory'
-import { getConfigs } from '../config/multi-tenant'
+import { AppUser } from '../test/factories/app_user.factory'
+import { Lead } from '../test/factories/lead.factory'
+import { initConnection } from './config/db'
 
 import faker = require('faker')
 import Knex = require('knex')
@@ -44,19 +44,11 @@ const deleteRecords = async (knex: Knex): Promise<void> => {
 }
 
 const runTenantSeeds = async (): Promise<void> => {
-  console.log('Tenant seeds starting')
-  const tenantConfigMap = await getConfigs()
-
-  const tenantKnexArr = []
-  tenantConfigMap.forEach((config) => {
-    tenantKnexArr.push(Knex(config))
-  })
-  // eslint-disable-next-line no-restricted-syntax
-  for (const knex of tenantKnexArr) {
-    await seed(knex)
-    await knex.destroy()
-  }
-  console.log('Tenant Seeds completed')
+  console.log('Seeds starting')
+  const knex = initConnection()
+  await seed(knex)
+  await knex.destroy()
+  console.log('Seeds completed')
 }
 
 runTenantSeeds()

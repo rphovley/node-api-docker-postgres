@@ -6,12 +6,11 @@ import morgan from 'morgan'
 import cors from 'cors'
 import * as routes from './routes/engage'
 import * as adminRoutes from './routes/admin'
-import { initGlobalObjection } from './utils/global_db_config'
+import { initConnection } from './utils/db_config'
 import { BaseError } from './utils/customErrors'
 import normalizePort from './utils/normalizePort'
 import authentication from './middleware/authentication'
 import { authorization } from './middleware/authorization'
-import { dbConnection } from './middleware/db_connection'
 import { getLogger } from './utils/logger' // uses google cloud logging
 
 const PORT_FALLBACK = '8080'
@@ -23,7 +22,7 @@ export class Express {
 
   constructor() {
     this.app = express()
-    initGlobalObjection() // initialize the db connection and objection ORM to global db
+    initConnection() // initialize the db connection and objection ORM to global db
     this.port = normalizePort(process.env.SERVER_PORT || PORT_FALLBACK)
     this.app.set('port', this.port)
     this.initMiddleware()
@@ -49,7 +48,6 @@ export class Express {
     this.app.use(morgan('dev'))
     this.app.use(cors())
     this.app.use(express.static(path.join(__dirname, 'public')))
-    this.app.use(dbConnection)
     this.app.use(authentication.firebaseAuth())
     this.app.use(authorization)
   }

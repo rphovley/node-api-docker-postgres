@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { initConnection } from '../../utils/global_db_config'
+import { initConnection } from '../../utils/db_config'
 
 import Knex = require('knex')
 

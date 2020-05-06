@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable dot-notation */
-import { initConnection } from '../config/global'
+import { initConnection } from './config/db'
 
 
 import Knex = require('knex')
@@ -10,7 +10,7 @@ export async function seed(knex: Knex): Promise<void> {
 
   await deleteRecords(knex)
   const now = (new Date()).toISOString()
-  console.log('inserting global records')
+  console.log('insertin records')
   await knex('tenant').insert({
     created_at: now,
     updated_at: now,
@@ -44,17 +44,17 @@ export async function seed(knex: Knex): Promise<void> {
 }
 
 const deleteRecords = async (knex: Knex): Promise<void> => {
-  console.log('removing global records')
+  console.log('removing records')
   await knex('tenant').del()
 }
 
-const globalKnex = initConnection()
+const dbConnection = initConnection()
 
 const runSeeds = async (): Promise<void> => {
-  console.log('Global seeds starting')
-  await seed(globalKnex)
+  console.log('Seeds starting')
+  await seed(dbConnection)
   console.log('Seeds completed')
-  await globalKnex.destroy()
+  await dbConnection.destroy()
 }
 
 runSeeds()

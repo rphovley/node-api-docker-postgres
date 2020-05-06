@@ -2,8 +2,6 @@
 
 // module dependencies
 
-import './utils/env'
-
 // eslint-disable-next-line import/first
 import { Express } from './express'
 

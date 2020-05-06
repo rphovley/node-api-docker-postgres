@@ -22,7 +22,7 @@ const getLogger = (): Bunyan => {
     logger = Bunyan.createLogger({
     // The JSON payload of the log as it appears in Stackdriver Logging
     // will contain "name": "my-service"
-      name: 'RedPandaEvents',
+      name: 'replace-me',
       streams,
     })
   }

@@ -1,9 +1,9 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
 require('ts-node/register')
 
 // This file is not used when running migrations or running seeds. It is only used when creating a migration.
 // eslint-disable-next-line import/first
-import { config } from '../config/global'
+import { config } from './config/db'
 
 module.exports = {
 

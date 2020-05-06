@@ -1,9 +1,6 @@
-# CI/CD for Node API (Postgres, Objection, GC App Engine, Firebase)
+# CI/CD for Node API with docker, postgres, firebase auth and objection (no multi-tenancy)
 
-Template for CI/CD that incorporates Google Cloud App Engine with Google Cloud SQL.
-Also incorporates
-
-1. a structure for multi-tenancy with separate dbs
+1. a structure for api with single db
 2. has some logging built in for Google Logs
 3. uses firebase auth for authentication
 
@@ -20,10 +17,9 @@ All of these were noted from my machine at the time and may not be the lower lim
 
 - Find all instances of `replace-me` and replace them with a sensible name for your project
 - Run `yarn` to install dependencies
-- Run `yarn start-db` to the postgres db container
-- Run `yarn migrate` to run migrations and seeds for the dataset.
-- Run `yarn migrate-global`, `yarn seed-global`, `yarn migrate-tenant`, and `yarn seed-tenant` to run migrations or seeds independently
-- Run `yarn dev` to start the api. This will also compile typescript into javascript and watch for any changes.
+- Run `yarn migrate` and `yarn seed`to run migrations and seed the db
+- Run `yarn watch` to compile ts to js (must be run before `yarn dev`)
+- Run `yarn dev` to start the api and postgres db. Must run `yarn watch` first to compile ts to dist folder
 
 ## Linting
 
@@ -43,7 +39,7 @@ All of these were noted from my machine at the time and may not be the lower lim
 
 - This project makes use of Knex and Objection for its relational db needs. Objection is built on top of Knex. We utilize Knex for migrations and db connections and then Objection for Object modeling.
 - Uses [JSONSchema](http://json-schema.org/) for validation
-- To create a migration, go to to the `global` directory or the `multi-tenant` directory (depending on which db you want the migration for), and run the command `knex migrate:make {migration_name}`. This requires that you have installed the knex-cli to your machine
+- To create a migration, go to to the `deployment` directory and run the command `knex migrate:make {migration_name}`. This requires that you have installed the knex-cli to your machine
 
 ## Notes
 
@@ -52,7 +48,7 @@ All of these were noted from my machine at the time and may not be the lower lim
 
 ## Directory Structure
 
-- `knex`: directory for seeds and migrations for our database
+- `deployment`: directory for seeds and migrations for our database
 - `scripts`: various development scripts for the project. Could contain automations for starting, building, deployment, etc...
 - `server`: the application lives here.
   - `bin`: entry point for the application and environment variables
@@ -73,7 +69,7 @@ All of these were noted from my machine at the time and may not be the lower lim
 ## Docker containers
 
 - This project uses docker-compose to orchestrate the postgres containers (development)
-- In the production environment, the postgres container is replaced by usage of postgres as a service- as it's bad practice to host the database on the same machine as the server (risk of data corruption)
+- In the production environment, the postgres container is replaced by usage of postgres as a service as it's bad practice to host the database on the same machine as the server (risk of data corruption)
 
 ## [CI/CD](https://docs.google.com/document/d/1oufUMsz1exq8iEC98emocDtwcjimS4RXz3Ors2wqPPc/edit?usp=sharing)
 
@@ -81,4 +77,4 @@ All of these were noted from my machine at the time and may not be the lower lim
 
 - What did Neil Armstrong say when no one laughed at his moon jokes?  
   “I guess you had to be there.”
-- Testing
+- Testing in this project is a joke

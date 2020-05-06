@@ -9,6 +9,7 @@ server/dist
 # Environment Vars #
 ####################
 env
+google_service_accounts
 *.env
 *.env.test
 

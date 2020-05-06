@@ -1,4 +1,2 @@
-yarn migrate-global
-yarn seed-global
-yarn migrate-tenant
-yarn seed-tenant
+./node_modules/.bin/ts-node ./deployment/migrate.ts
+./node_modules/.bin/ts-node ./deployment/seeds.ts

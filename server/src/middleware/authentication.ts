@@ -27,7 +27,7 @@ class Authentication {
       try {
         if (!req.headers.authorization) throw new AuthErrors.UnauthorizedError('No Authorization token sent.')
         if (!req.headers.tenantid) throw new AuthErrors.UnauthorizedError('No Client id sent.')
-        req.appUser = await Authentication.getUser(req.headers.authorization, req.knex)
+        req.appUser = await Authentication.getUser(req.headers.authorization)
       } catch (err) {
         if (err instanceof BaseError) next(err)
         else next(new AuthErrors.UnauthorizedError())
@@ -36,11 +36,11 @@ class Authentication {
     }
   }
 
-  private static async getUser(token: string, knex: Knex): Promise<AppUser> {
+  private static async getUser(token: string): Promise<AppUser> {
     let appUser
     try {
       const fUser = await admin.auth().verifyIdToken(token) // verify firebase id token is valid
-      appUser = await AppUser.query(knex).findOne({ firebase_uid: fUser.uid }) // find user with firebase uid in system
+      appUser = await AppUser.query().findOne({ firebase_uid: fUser.uid }) // find user with firebase uid in system
       if (!appUser) throw new AuthErrors.UserNotFoundUnauthorizedError('No User found for that firebase_id. Send user to registration')
     } catch (err) {
       // TODO: fix this garbase conditional. The universe is crying out in pain
