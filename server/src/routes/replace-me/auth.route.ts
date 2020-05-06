@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { signup } from '../../controllers/engage/auth.controller'
+import { signup } from '../../controllers/replace-me/auth.controller'
 
 export class AuthRoute {
   public static create(router: Router): void {

@@ -2,20 +2,19 @@ version: "3"
 services:
   api:
     container_name: api
-    image: node:dubnium-alpine
+    image: node:erbium-alpine
     command: /bin/sh -c "cd api && ./node_modules/.bin/nodemon --inspect=0.0.0.0 ./server/dist/server.js"
     volumes:
       - ./server:/api/server
       - ./deployment:/api/deployment
       - ./test:/api/test
-      - ./env:/api/env
       - ./node_modules:/api/node_modules
       - ./package.json:/api/package.json
     depends_on:
       - db
     env_file:
-      - ./env/.db.env
-      - ./env/.firebase_web.env
+      - ./server/src/env/.db.env
+      - ./server/src/env/.firebase_web.env
     ports:
       - "8080:8080"
       - "9229:9229" # for remote debugging
@@ -29,4 +28,4 @@ services:
     volumes:
       - ./data/db_data:/var/lib/postgresql/data/pgdata
     ports:
-      - "5435:5432"
+      - "5432:5432"

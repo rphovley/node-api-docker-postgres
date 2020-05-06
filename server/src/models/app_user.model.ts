@@ -22,7 +22,7 @@ export class AppUser extends BaseModel implements IAppUser {
   email: string
   static tableName = 'app_user'
 
-  static async signupEngageUser(signupUser: ISignupUser): Promise<AppUser> {
+  static async signupUser(signupUser: ISignupUser): Promise<AppUser> {
     // const test = await admin.auth().verifyIdToken(signupUser.firebase_token)
     const { uid } = await admin.auth().verifyIdToken(signupUser.firebase_token) // validate firebase token
     // const [lead] = await knex.select({ app_user_id: 'app_user.id', lead_id: 'lead.id' }).from('lead').leftJoin('app_user', 'lead.email', 'app_user.email').where('app_user.firebase_uid', uid)

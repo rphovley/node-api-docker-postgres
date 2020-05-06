@@ -2,7 +2,7 @@ version: "3"
 services:
   api:
     container_name: api
-    image: node:dubnium-alpine
+    image: node:erbium-alpine
     command: node /api/server/dist/server.js
     env_file:
       - ./server/bin/env/.firebase.env
@@ -18,7 +18,7 @@ services:
     environment:
       PGDATA: "/var/lib/postgresql/data/pgdata"
       POSTGRES_PASSWORD: "password"
-      POSTGRES_USER: "global"
+      POSTGRES_USER: "replace-me"
     volumes:
       - ./data/db_data:/var/lib/postgresql/data/pgdata
     ports:

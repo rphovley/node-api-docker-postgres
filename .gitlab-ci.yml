@@ -1,4 +1,4 @@
-image: node:dubnium-alpine
+image: node:erbium-alpine
 
 variables:
   DEPLOYER_TAG: "registry.gitlab.com/rphovley-templates/node-api-gcae-gcsql-tenancy/deployer"
@@ -20,16 +20,10 @@ dependencies:
   stage: dependencies
   script:
     - yarn
+    - yarn lint
   only:
     changes:
       - package.json
-
-build:
-  stage: build
-  script:
-    - yarn
-    - yarn lint # I have included this in the same stage because of stage overhead (30 seconds per stage)
-    # - yarn compile # whatever command(s) to build the project, App Engine is building this project in the deployment stage
 
 deploy_staging:
   stage: staging
@@ -38,6 +32,8 @@ deploy_staging:
   environment: staging
   script:
     - echo $DEPLOYER_SERVICE_ACCOUNT | xxd -r -p - > /tmp/$CI_PIPELINE_ID.json # translate hex back to json
+    - mkdir server/src/env && mkdir server/src/env/google_service_accounts
+    - echo $FIREBASE_SERVICE_ACCOUNT | xxd -r -p - > server/src/env/google_service_accounts/firebase_service_account.json
     - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json # use json to authenticate with gcloud
     - rm -rf /tmp/$CI_PIPELINE_ID.json # remove creds from server
     - npx gae-ayaml-env # create yaml file with environment variables we need for App Engine
@@ -50,7 +46,8 @@ migrate_staging:
   when: on_success
   environment: staging_migrations
   script:
-    - yarn migrate
+    - yarn
+    - sh ./deployment/migrate.sh
 
 deploy_production:
   stage: production
