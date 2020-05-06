@@ -32,6 +32,8 @@ deploy_staging:
   environment: staging
   script:
     - echo $DEPLOYER_SERVICE_ACCOUNT | xxd -r -p - > /tmp/$CI_PIPELINE_ID.json # translate hex back to json
+    - echo $FIREBASE_SERVICE_ACCOUNT | xxd -r -p - > env/google_service_accounts/firebase_service_account.json
+    - ls env/google_service_accounts
     - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json # use json to authenticate with gcloud
     - rm -rf /tmp/$CI_PIPELINE_ID.json # remove creds from server
     - npx gae-ayaml-env # create yaml file with environment variables we need for App Engine
