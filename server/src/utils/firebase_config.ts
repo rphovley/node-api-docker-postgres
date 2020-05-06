@@ -1,5 +1,7 @@
 /* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable import/no-unresolved */ // the firebase file is added dynamically by the build server after ts is built
+
 import admin from 'firebase-admin'
 
 const initializeFirebase = (): void => {
