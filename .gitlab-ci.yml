@@ -20,16 +20,10 @@ dependencies:
   stage: dependencies
   script:
     - yarn
+    - yarn lint
   only:
     changes:
       - package.json
-
-build:
-  stage: build
-  script:
-    - yarn
-    - yarn lint # I have included this in the same stage because of stage overhead (30 seconds per stage)
-    # - yarn compile # whatever command(s) to build the project, App Engine is building this project in the deployment stage
 
 deploy_staging:
   stage: staging

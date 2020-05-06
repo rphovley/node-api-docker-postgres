@@ -44,8 +44,7 @@ module.exports = {
         "tsx": "never"
       }
     ],
-    "import/prefer-default-export": 0,
-    'engage-api/no-query-without-knex':1
+    "import/prefer-default-export": 0
   }
 }
 // module.exports = {

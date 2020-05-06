@@ -6,8 +6,8 @@ import { AppUser } from '../models/app_user.model'
 
 export const whiteList: string[] = [
   // Add unprotected endpoints here
-  '/api/engage/tenant',
-  '/api/engage/auth/signup',
+  '/api/replace-me/tenant',
+  '/api/replace-me/auth/signup',
 ]
 
 class Authentication {
