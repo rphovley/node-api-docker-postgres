@@ -4,8 +4,6 @@ import { initializeFirebase, admin } from '../utils/firebase_config'
 import { getLogger } from '../utils/logger'
 import { AppUser } from '../models/app_user.model'
 
-import Knex = require('knex')
-
 export const whiteList: string[] = [
   // Add unprotected endpoints here
   '/api/engage/tenant',
@@ -26,7 +24,6 @@ class Authentication {
       }
       try {
         if (!req.headers.authorization) throw new AuthErrors.UnauthorizedError('No Authorization token sent.')
-        if (!req.headers.tenantid) throw new AuthErrors.UnauthorizedError('No Client id sent.')
         req.appUser = await Authentication.getUser(req.headers.authorization)
       } catch (err) {
         if (err instanceof BaseError) next(err)

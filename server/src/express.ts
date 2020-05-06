@@ -6,7 +6,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 import * as routes from './routes/engage'
 import * as adminRoutes from './routes/admin'
-import { initConnection } from './utils/db_config'
+import { initObjection } from './utils/db_config'
 import { BaseError } from './utils/customErrors'
 import normalizePort from './utils/normalizePort'
 import authentication from './middleware/authentication'
@@ -22,7 +22,7 @@ export class Express {
 
   constructor() {
     this.app = express()
-    initConnection() // initialize the db connection and objection ORM to global db
+    initObjection() // initialize the db connection and objection ORM to global db
     this.port = normalizePort(process.env.SERVER_PORT || PORT_FALLBACK)
     this.app.set('port', this.port)
     this.initMiddleware()

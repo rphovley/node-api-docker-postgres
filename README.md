@@ -16,6 +16,7 @@ All of these were noted from my machine at the time and may not be the lower lim
 ## Quick Start
 
 - Find all instances of `replace-me` and replace them with a sensible name for your project
+- Obtain credentials for `./env/.db.env`, `./env/.firebase_web.env` and `./server/google_service_accounts/firebase_service_account.json` files. They are required to run the project.
 - Run `yarn` to install dependencies
 - Run `yarn migrate` and `yarn seed`to run migrations and seed the db
 - Run `yarn watch` to compile ts to js (must be run before `yarn dev`)
@@ -49,9 +50,13 @@ All of these were noted from my machine at the time and may not be the lower lim
 ## Directory Structure
 
 - `deployment`: directory for seeds and migrations for our database
+- `env`: holds environment variables for application
+  - `.db.env`: holds database environment variables. Required for all parts of the application.
+  - `.firebase_web.env`: web api key used for generating user tokens for testing out api.
+  - `google_service_accounts`: any service accounts for google required by the application
+    - `firebase_service_account.json`: required to run the application (used by auth middleware).
 - `scripts`: various development scripts for the project. Could contain automations for starting, building, deployment, etc...
 - `server`: the application lives here.
-  - `bin`: entry point for the application and environment variables
   - `dist`: directory the typescript is transpiled into
   - `src`: typescript directory for the application. Only used in development. This directory is transpiled into the `dist` directory which is used to run the app in production
     - `controllers`: Houses logic for handling requests from the client

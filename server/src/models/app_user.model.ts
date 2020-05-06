@@ -1,7 +1,6 @@
 import { BaseModel, IBaseModel } from './base.model'
 
 import admin = require('firebase-admin')
-import Knex = require('knex')
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 const roles = <const> ['admin', 'attendee', 'speaker']

@@ -7,7 +7,7 @@ services:
     volumes:
       - ./server:/api/server
       - ./deployment:/api/deployment
-      - ./test/factories:/api/test/factories
+      - ./test:/api/test
       - ./env:/api/env
       - ./node_modules:/api/node_modules
       - ./package.json:/api/package.json
@@ -15,6 +15,7 @@ services:
       - db
     env_file:
       - ./env/.db.env
+      - ./env/.firebase_web.env
     ports:
       - "8080:8080"
       - "9229:9229" # for remote debugging
