@@ -8,7 +8,7 @@ import Knex = require('knex')
 const isDev = process.env.NODE_ENV === undefined
 const HOST = isDev ? process.env.APP_DB_HOST : `/cloudsql/${process.env.APP_DB_HOST}`
 
-if(!process.env.DB_USER || !HOST || !process.env.DB_NAME) throw Error("Missing database env variables")
+if (!process.env.DB_USER || !HOST || !process.env.DB_NAME) throw Error('Missing database env variables')
 export const config: Knex.Config = {
   client: 'postgres',
   connection: {
