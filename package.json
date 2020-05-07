@@ -26,7 +26,7 @@
     "seed": "docker exec api /bin/sh -c 'cd /api && sh ./deployment/migrate_and_seed.sh'",
     "build-deployer": "docker build ./deployment --tag  registry.gitlab.com/rphovley-templates/node-api-docker-postgres/deployer",
     "push-deployer": "docker push registry.gitlab.com/rphovley-templates/node-api-docker-postgres/deployer",
-    "test-runner": "gitlab-runner exec docker --docker-privileged --cache-dir=/tmp/cache --docker-volumes /tmp/cache:/tmp/cache $(cat ./deployment/ci.env |cut -f 2 |sed 's/^/--env /g'| xargs -0) deploy_staging",
+    "test-runner": "gitlab-runner exec docker --docker-privileged --cache-dir=/tmp/cache --docker-volumes /tmp/cache:/tmp/cache $(cat ./deployment/ci.env |cut -f 2 |sed 's/^/--env /g'| xargs -0) migrate_staging",
     "prod": "bash scripts/build-prod.sh",
     "lint": "eslint . --ext .ts,.tsx"
   },
