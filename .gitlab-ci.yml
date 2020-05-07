@@ -45,7 +45,11 @@ migrate_staging:
     - deployer
   when: on_success
   environment: staging_migrations
+  cache:
+    paths:
+      - node_modules/
   script:
+    - ls
     - sh ./deployment/migrate.sh
 
 deploy_production:
