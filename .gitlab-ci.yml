@@ -17,7 +17,7 @@ cache:
 dependencies:
   stage: dependencies
   script:
-    - yarn --production=true
+    - yarn
     - yarn lint
   only:
     changes:
