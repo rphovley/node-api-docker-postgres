@@ -8,14 +8,13 @@ services:
       - ./server:/api/server
       - ./deployment:/api/deployment
       - ./test:/api/test
-      - ./env:/api/env
       - ./node_modules:/api/node_modules
       - ./package.json:/api/package.json
     depends_on:
       - db
     env_file:
-      - ./env/.db.env
-      - ./env/.firebase_web.env
+      - ./server/src/env/.db.env
+      - ./server/src/env/.firebase_web.env
     ports:
       - "8080:8080"
       - "9229:9229" # for remote debugging
