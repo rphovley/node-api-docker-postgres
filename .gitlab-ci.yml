@@ -17,7 +17,7 @@ cache:
 dependencies:
   stage: dependencies
   script:
-    - yarn
+    - yarn --production=true
     - yarn lint
   only:
     changes:
@@ -43,8 +43,11 @@ migrate_staging:
     - deployer
   when: on_success
   environment: staging_migrations
+  cache:
+    paths:
+      - node_modules/
   script:
-    - ls
+    - yarn
     - sh ./deployment/migrate.sh
 
 deploy_production:
