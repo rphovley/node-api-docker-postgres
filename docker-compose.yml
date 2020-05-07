@@ -18,7 +18,7 @@ services:
     environment:
       PGDATA: "/var/lib/postgresql/data/pgdata"
       POSTGRES_PASSWORD: "password"
-      POSTGRES_USER: "global"
+      POSTGRES_USER: "replace-me"
     volumes:
       - ./data/db_data:/var/lib/postgresql/data/pgdata
     ports:

@@ -46,7 +46,7 @@ migrate_staging:
   when: on_success
   environment: staging_migrations
   script:
-    - yarn migrate
+    - sh ./deployment/migrate.sh
 
 deploy_production:
   stage: production
