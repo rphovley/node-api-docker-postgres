@@ -10,7 +10,9 @@ stages:
   - production
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
+  key:
+    files:
+      - package.json
   paths:
     - node_modules/
 
@@ -43,9 +45,6 @@ migrate_staging:
     - deployer
   when: on_success
   environment: staging_migrations
-  cache:
-    paths:
-      - node_modules/
   script:
     - yarn
     - sh ./deployment/migrate.sh

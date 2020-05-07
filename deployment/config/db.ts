@@ -4,6 +4,12 @@ import './env'
 
 import Knex = require('knex')
 
+//convert APP_DB to just DB
+ if(process.env.APP_DB_USER){
+   process.env.DB_USER = process.env.APP_DB_USER
+   process.env.DB_PASS = process.env.APP_DB_PASS
+   process.env.DB_NAME = process.env.APP_DB_NAME
+ }
 export const config: Knex.Config = {
   client: 'postgres',
   connection: {
